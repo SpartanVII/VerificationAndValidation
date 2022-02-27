@@ -13,10 +13,12 @@ import java.util.stream.Stream;
 
 class NerdleTest {
     static Nerdle nerdle;
+    static String error;
 
     @BeforeAll
     static void setUp(){
         nerdle = new Nerdle();
+        error = "";
     }
 
     static Stream<Arguments> dataForValidClass1() {
@@ -72,121 +74,159 @@ class NerdleTest {
 
     static Stream<Arguments> dataForInvalidClass3() {
         return Stream.of(
-                Arguments.of("455-5=450", "05+2=7", true, null),
-                Arguments.of("5+4=9", "05+2=7", true, null),
-                Arguments.of(" ", "05+2=7", true, null)
+                Arguments.of("455-5=450", "05+2=7", true),
+                Arguments.of("5+4=9", "05+2=7", true),
+                Arguments.of(" ", "05+2=7", true)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass3")
-    public void invalidClass3(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass3(String guess, String solution, boolean isMini){
+        try{
+        nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La longitud de uno de los parametros es incorrecta"));
     }
 
 
 
     static Stream<Arguments> dataForInvalidClass4() {
         return Stream.of(
-                Arguments.of("05+4=9", "455-5=450", true, null),
-                Arguments.of("05+4=9", "5+2=7", true, null),
-                Arguments.of("05+4=9", " ", true, null)
+                Arguments.of("05+4=9", "455-5=450", true),
+                Arguments.of("05+4=9", "5+2=7", true),
+                Arguments.of("05+4=9", " ", true)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass4")
-    public void invalidClass4(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass4(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La longitud de uno de los parametros es incorrecta"));
     }
 
 
 
     static Stream<Arguments> dataForInvalidClass5() {
         return Stream.of(
-                Arguments.of("455-5=0450", "05+2=7", false, null),
-                Arguments.of("5+4=9", "05+2=7", false, null),
-                Arguments.of(" ", "05+2=7", false, null)
+                Arguments.of("455-5=0450", "05+2=7", false),
+                Arguments.of("5+4=9", "05+2=7", false),
+                Arguments.of(" ", "05+2=7", false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass5")
-    public void invalidClass5(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass5(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La longitud de uno de los parametros es incorrecta"));
     }
 
 
 
     static Stream<Arguments> dataForInvalidClass6() {
         return Stream.of(
-                Arguments.of("05+4=9", "455-5=0450", false, null),
-                Arguments.of("05+4=9", "5+2=7", false, null),
-                Arguments.of("05+4=9", " ", false, null)
+                Arguments.of("05+4=9", "455-5=0450", false),
+                Arguments.of("05+4=9", "5+2=7", false),
+                Arguments.of("05+4=9", " ", false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass6")
-    public void invalidClass6(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass6(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La longitud de uno de los parametros es incorrecta"));
     }
 
     static Stream<Arguments> dataForInvalidClass7() {
         return Stream.of(
-                Arguments.of("05*4=9", "05+4=9", true, null),
-                Arguments.of("/5*=8+", "05+2=7", true, null),
-                Arguments.of("patata", "05+2=7", true, null)
+                Arguments.of("05*4=9", "05+4=9", true),
+                Arguments.of("/5*=8+", "05+2=7", true),
+                Arguments.of("patata", "05+2=7", true)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass7")
-    public void invalidClass7(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass7(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La expresión de uno de los parametros es incorrecta"));
     }
 
     static Stream<Arguments> dataForInvalidClass8() {
         return Stream.of(
-                Arguments.of("05+2=7", "05*4=9", true, null),
-                Arguments.of("05+2=7", "/5*=8+", true, null),
-                Arguments.of("05+2=7", "patata", true, null)
+                Arguments.of("05+2=7", "05*4=9", true),
+                Arguments.of("05+2=7", "/5*=8+", true),
+                Arguments.of("05+2=7", "patata", true)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass8")
-    public void invalidClass8(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass8(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("La expresión de uno de los parametros es incorrecta"));
     }
 
 
     static Stream<Arguments> dataForInvalidClass9() {
         return Stream.of(
-                Arguments.of(null, "05+2=7", true, null),
-                Arguments.of(null, "05+2=7", true, null),
-                Arguments.of(null, "03*2=6", true, null)
+                Arguments.of(null, "05+2=7", true),
+                Arguments.of(null, "0005+4=9", false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass9")
-    public void invalidClass9(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass9(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("Uno de lo parametros equivale a null"));
     }
 
     static Stream<Arguments> dataForInvalidClass10() {
         return Stream.of(
-                Arguments.of("05+2=7", null, true, null),
-                Arguments.of("05+2=7", null, true, null),
-                Arguments.of("05+2=7", null, true, null)
+                Arguments.of("05+2=7", null, true),
+                Arguments.of("0005+2=7", null, false)
         );
     }
 
     @ParameterizedTest
     @MethodSource("dataForInvalidClass10")
-    public void invalidClass10(String guess, String solution, boolean isMini, Nerdle.SymbolHint[] res){
-        assertThat(nerdle.getHints(guess,solution,isMini), is(res));
+    public void invalidClass10(String guess, String solution, boolean isMini){
+        try{
+            nerdle.getHints(guess,solution,isMini);
+        } catch (Exception e ){
+            error= e.getMessage();
+        }
+        assertThat(error, is("Uno de lo parametros equivale a null"));
     }
 
 

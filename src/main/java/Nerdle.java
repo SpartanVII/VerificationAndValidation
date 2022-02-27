@@ -17,6 +17,7 @@ public class Nerdle {
     }
     public SymbolHint[] getHints(String guess, String solution, boolean isMini) {
         // Not yet implemented...
+
         return null;
     }
 }
