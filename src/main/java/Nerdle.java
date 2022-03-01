@@ -21,13 +21,12 @@ public class Nerdle {
 
         DoubleEvaluator evaluator = new DoubleEvaluator();
         try {
-            if(evaluator.evaluate(comp[0])==Integer.parseInt(comp[1])){
+            if(evaluator.evaluate(comp[0]).equals(evaluator.evaluate(comp[1]))){
                 return true;
             }
         }catch (Exception e){
             return false;
         }
-
 
         return false;
     }
